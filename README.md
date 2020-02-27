@@ -60,15 +60,13 @@ let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 ```
 
-colours picker block allows the user to pick form a set of colours.
+colours picker block allows the user to pick from a set of colours.
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.colors(ZipLedColors.Red)
 ```
 
 RGB block allows the user to set any colour by setting different levels for red, green, and blue between 0 and 255
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.rgb(255, 255, 255)
 ```
 
@@ -86,7 +84,6 @@ haloDisplay.showBarGraph(kitronik_halo_hd.readSoundLevel(), 255)
 
 Wavelength block simulates a particular wavelength colour by automatically mixing the RGB values.
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.wavelength(470)
 ```
 
@@ -94,19 +91,16 @@ haloDisplay.wavelength(470)
 
 Read sound level block will take an anolgue reading of the current sound level and return as a number
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 basic.showNumber(kitronik_halo_hd.readSoundLevel())
 ```
 
 Read sound level block will take five readings of the sound level, calculate the average and return as a number
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 basic.showNumber(kitronik_halo_hd.readAverageSoundLevel())
 ```
 
 Listen for clap will listen for a number of claps within a defined time period (between 1 and 10 seconds), once detected the code will execute
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.listenForClap(1, 1, function () {
     basic.showLeds(`
         . . . . .
@@ -131,6 +125,7 @@ kitronik_halo_hd.listenForClap(1, 1, function () {
 Set Time Blocks
 These groups of blocks will set the time to the RTC chip. This can be done in either one block for hours,minutes and seconds or set individually
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.setTime(22, 04, 00)
 kitronik_halo_hd.writeHours(22)
 kitronik_halo_hd.writeMinutes(04)
@@ -140,6 +135,7 @@ kitronik_halo_hd.writeSeconds(00)
 Set Date Blocks
 These groups of blocks will set the date to the RTC chip. This can be done in either one block for day,month,year (DD/MM/YY) or set individually
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.setDate(12, 11, 55)
 kitronik_halo_hd.writeDay(12)
 kitronik_halo_hd.writeMonth(11)
@@ -158,6 +154,7 @@ basic.showNumber(kitronik_halo_hd.readTimeParameter(TimeParameter.Seconds))
 Read Time For ZIP Display
 This block reads the time from the RTC and formats it for display on the Zip LEDs
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.setZipLedColor(kitronik_halo_hd.readTimeForZip(TimeParameter.Hours), kitronik_halo_hd.colors(ZipLedColors.Red))
 haloDisplay.setZipLedColor(kitronik_halo_hd.readTimeForZip(TimeParameter.Minutes), kitronik_halo_hd.colors(ZipLedColors.Blue))
 haloDisplay.setZipLedColor(kitronik_halo_hd.readTimeForZip(TimeParameter.Seconds), kitronik_halo_hd.colors(ZipLedColors.Green))
@@ -175,6 +172,7 @@ basic.showNumber(kitronik_halo_hd.readDateParameter(DateParameter.Seconds))
 Set Alarm Block
 The set alarm block allows the user to input a time for an alarm to trigger on either once or daily.  The alarm can either be silenced by the user or automatically
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.simpleAlarmSet(kitronik_halo_hd.AlarmType.Single, 12, 45, kitronik_halo_hd.AlarmSilence.autoSilence)
 ```
 
