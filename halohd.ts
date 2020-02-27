@@ -34,6 +34,9 @@
 		Black = 0x000000
 	}
 
+    /** 
+     * Different time options for the Real Time Clock
+     */
 	enum TimeParameter {
 		//% block=hours
 		Hours,
@@ -43,6 +46,9 @@
 		Seconds
 	}
 
+    /**
+     * Different date options for the Real Time Clock
+     */
 	enum DateParameter {
 		//% block=day
 		Day,
@@ -219,7 +225,17 @@ namespace kitronik_halo_hd {
         rotate(offset: number = 1): void {
             this.buf.rotate(-offset * 3, this.start * 3, this._length * 3)
         }
-
+    	/**
+         * Sets whole ZIP Halo display as a given color (range 0-255 for r, g, b). Call Show to make changes visible 
+         * @param rgb RGB color of the LED
+         */
+        //% subcategory="ZIP LEDs"
+        //% blockId="kitronik_halo_hd_display_only_set_strip_color" block="%haloDisplay|set color %rgb=kitronik_halo_hd_colors" 
+        //% weight=99 blockGap=8
+        setColor(rgb: number) {
+        	rgb = rgb >> 0;
+            this.setAllRGB(rgb);
+        }
     	/**
          * Shows whole ZIP Halo display as a given color (range 0-255 for r, g, b). 
          * @param rgb RGB color of the LED
@@ -264,7 +280,6 @@ namespace kitronik_halo_hd {
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_halo_hd_display_clear" block="%haloDisplay|clear"
         //% weight=95 blockGap=8
-        
         clear(): void {
             this.buf.fill(0, this.start * 3, this._length * 3);
         }
@@ -291,23 +306,15 @@ namespace kitronik_halo_hd {
             basic.pause(1) //add a pause to stop wierdnesses
         }
 
-        /**
-         * Set the pin where the ZIP LED is connected, defaults to P8.
-         
-        setPin(pin: DigitalPin): void {
-            this.pin = pin;
-            pins.digitalWritePin(this.pin, 8);
-            // don't yield to avoid races on initialization
-    	}*/
-
+        //Sets up the buffer for pushing LED control data out to LEDs
         private setBufferRGB(offset: number, red: number, green: number, blue: number): void {
             this.buf[offset + 0] = green;
             this.buf[offset + 1] = red;
             this.buf[offset + 2] = blue;
         }
 
+        //Separates out Red, Green and Blue data and fills the LED control data buffer for all LEDs
         private setAllRGB(rgb: number) {
-
             let red = unpackR(rgb);
             let green = unpackG(rgb);
             let blue = unpackB(rgb);
@@ -318,6 +325,7 @@ namespace kitronik_halo_hd {
             }
         }
         
+        //Separates out Red, Green and Blue data and fills the LED control data buffer for a single LED
         private setPixelRGB(pixeloffset: number, rgb: number): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
@@ -349,23 +357,22 @@ namespace kitronik_halo_hd {
         haloDisplay._length = numZips;
         haloDisplay.setBrightness(128)
         haloDisplay.pin = DigitalPin.P8;
-        pins.digitalWritePin(haloDisplay.pin, 8);
-        //haloDisplay.setPin(DigitalPin.P8)
+        pins.digitalWritePin(haloDisplay.pin, 0);
         return haloDisplay;
     }
 
     /**
-     * Converts wavelength value to red, green, blue channels and show on ZIPs
+     * Converts wavelength value to red, green, blue channels
      * @param wavelength value between 470 and 625. eg: 500
-     * The LEDs we are using have centre wavelengths of 470nm (Blue) 525nm(Green) and 625nm (Red) 
-     * We blend these linearly to give the impression of the other wavelengths. 
-     * as we cant wavelength shift an actual LED... (Ye canna change the laws of physics Capt)
      */
     //% subcategory="ZIP LEDs"
     //% weight=1 blockGap=8
     //% blockId="kitronik_halo_hd_wavelength" block="wavelength %wavelength|nm"
     //% wavelength.min=470 wavelength.max=625
     export function wavelength(wavelength: number): number {
+     /*  The LEDs we are using have centre wavelengths of 470nm (Blue) 525nm(Green) and 625nm (Red) 
+     * 	 We blend these linearly to give the impression of the other wavelengths. 
+     *   as we cant wavelength shift an actual LED... (Ye canna change the laws of physics Capt)*/
 		let r = 0;
 		let g = 0;
 		let b = 0;
@@ -381,6 +388,40 @@ namespace kitronik_halo_hd {
 		}
         return packRGB(r, g, b);
     }
+    
+    /**
+     * Converts hue (0-360) to an RGB value. 
+     * Does not attempt to modify luminosity or saturation. 
+     * Colours end up fully saturated. 
+     * @param hue value between 0 and 360
+     */
+    //% subcategory="ZIP LEDs"
+    //% weight=1 blockGap=8
+    //% blockId="kitronik_halo_hd_hue" block="hue %hue"
+    //% hue.min=0 hue.max=360
+    export function hueToRGB(hue: number): number {
+        let redVal = 0
+        let greenVal = 0
+        let blueVal = 0
+        let hueStep = 2.125
+        if ((hue >= 0) && (hue < 120)) { //RedGreen section
+            greenVal = Math.floor((hue) * hueStep)
+            redVal = 255 - greenVal
+        }
+        else if ((hue >= 120) && (hue < 240)) { //GreenBlueSection
+            blueVal = Math.floor((hue - 120) * hueStep)
+            greenVal = 255 - blueVal
+        }
+        else if ((hue >= 240) && (hue < 360)) { //BlueRedSection
+            redVal = Math.floor((hue - 240) * hueStep)
+            blueVal = 255 - redVal
+        }
+        return ((redVal & 0xFF) << 16) | ((greenVal & 0xFF) << 8) | (blueVal & 0xFF);
+    }
+        
+     /*  The LEDs we are using have centre wavelengths of 470nm (Blue) 525nm(Green) and 625nm (Red) 
+     * 	 We blend these linearly to give the impression of the other wavelengths. 
+     *   as we cant wavelength shift an actual LED... (Ye canna change the laws of physics Capt)*/
 
     /**
      * Converts value to red, green, blue channels
@@ -405,17 +446,21 @@ namespace kitronik_halo_hd {
         return color;
     }
 
+    //Combines individual RGB settings to be a single number
     function packRGB(a: number, b: number, c: number): number {
         return ((a & 0xFF) << 16) | ((b & 0xFF) << 8) | (c & 0xFF);
     }
+    //Separates red value from combined number
     function unpackR(rgb: number): number {
         let r = (rgb >> 16) & 0xFF;
         return r;
     }
+    //Separates green value from combined number
     function unpackG(rgb: number): number {
         let g = (rgb >> 8) & 0xFF;
         return g;
     }
+    //Separates blue value from combined number
     function unpackB(rgb: number): number {
         let b = (rgb) & 0xFF;
         return b;
@@ -460,6 +505,9 @@ namespace kitronik_halo_hd {
         return packRGB(r, g, b);
     }
 
+    /**
+     * Options for direction hue changes, used by rainbow block (never visible to end user)
+     */
     export enum HueInterpolationDirection {
         Clockwise,
         CounterClockwise,
@@ -469,24 +517,20 @@ namespace kitronik_halo_hd {
     ////////////////////////////////
     //         MICROPHONE         //
     ////////////////////////////////
-
+     
     /**
-    * Read Sound Level blocks returns back a number of the current sound level at that point
+    * Read Sound Level blocks returns back a number 0-512 of the current sound level at that point
     */
     //% subcategory="Microphone"
     //% blockId=kitronik_halo_hd_read_sound_level
     //% block="read sound level"
     //% weight=100 blockGap=8
     export function readSoundLevel() {
-        if (kitronik_microphone.initialised == false) {
-            kitronik_microphone.init()
-        }
-        let read = (pins.analogReadPin(kitronik_microphone.microphonePin) - 520)
-        return read
+        return kitronik_microphone.readSoundLevel()
     }
 
     /**
-    * Read Sound Level blocks returns back a number of the current sound level averaged over 5 samples
+    * Read Sound Level blocks returns back a number 0-512 of the current sound level averaged over 5 samples
     */
     //% subcategory="Microphone"
     //% blockId=kitronik_halo_hd_read_average_sound_level
@@ -516,7 +560,7 @@ namespace kitronik_halo_hd {
     }
 
     /**
-    * Performs an action when a spike in sound
+    * Performs an action when a loud noise is detected, such as a clap
     * @param claps is the number of claps to listen out for before running the function eg: 1
     * @param timerperiod is period of time in which to listen for the claps or spikes eg: 1
     * @param soundSpike_handler is function that is run once detection in sound 
@@ -1021,7 +1065,7 @@ namespace kitronik_halo_hd {
     }
 
     /**
-     * Set simple alarm (not inbuilt on RTC chip)
+     * Set simple alarm
      * @param alarmType determines whether the alarm repeats
      * @param hour is the alarm hour setting (24 hour)
      * @param min is the alarm minute setting
