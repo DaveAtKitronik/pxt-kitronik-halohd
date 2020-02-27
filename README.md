@@ -1,7 +1,7 @@
 # Kitronik blocks for micro:bit
 
 # pxt-kitronik-halohd
-
+## TESTING
 Blocks that support [Kitronik kits and shields for the micro:bit](https://www.kitronik.co.uk/microbit.html)
 This package is for the [Kitronik :VIEW Halo HD](https://www.kitronik.co.uk/5672)
 
@@ -20,36 +20,43 @@ let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 
 Show colour block will set all the ZIP LED's to the same colour
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.showColor(kitronik_halo_hd.colors(ZipLedColors.Red))
 ```
 
 Show block will output to the ZIP LEDs
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.show()
 ```
 
 Show rainbow block will output a raindow spectrum across all the ZIP LEDs
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.showRainbow(1, 360)
 ```
 
 Clear block will clear any illuminated ZIP LEDs
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.clear()
 ```
 
 Set the brightness of all the ZIP LEDs, from 0 - 255 (255 full brightness) Use a 'show' block to make the changes visible.
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.setBrightness(255)
 ```
 
 rotate the pattern currently on the ZIP LEDs by the number of LEDs. The LEDs at the end of the chain reappear at the begining.
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.rotate(1)
 ```
 
 Set ZIP LED colour sets the RGB colour of a single ZIP LED.
 ```blocks
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 haloDisplay.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 ```
 
