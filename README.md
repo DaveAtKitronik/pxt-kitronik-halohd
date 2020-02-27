@@ -56,7 +56,8 @@ haloDisplay.rotate(1)
 
 Set ZIP LED colour sets the RGB colour of a single ZIP LED.
 ```blocks
-kitronik_halo_hd.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
+haloDisplay.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 ```
 
 colours picker block allows the user to pick from a set of colours.
@@ -83,7 +84,7 @@ haloDisplay.showBarGraph(kitronik_halo_hd.readSoundLevel(), 255)
 
 Wavelength block simulates a particular wavelength colour by automatically mixing the RGB values.
 ```blocks
-let Blue = kitronik_halo_hd..wavelength(470)
+let Blue = kitronik_halo_hd.wavelength(470)
 ```
 
 # Microphone blocks
@@ -124,7 +125,6 @@ kitronik_halo_hd.listenForClap(1, 1, function () {
 Set Time Blocks
 These groups of blocks will set the time to the RTC chip. This can be done in either one block for hours,minutes and seconds or set individually
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.setTime(22, 04, 00)
 kitronik_halo_hd.writeHours(22)
 kitronik_halo_hd.writeMinutes(04)
@@ -134,7 +134,6 @@ kitronik_halo_hd.writeSeconds(00)
 Set Date Blocks
 These groups of blocks will set the date to the RTC chip. This can be done in either one block for day,month,year (DD/MM/YY) or set individually
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.setDate(12, 11, 55)
 kitronik_halo_hd.writeDay(12)
 kitronik_halo_hd.writeMonth(11)
@@ -171,8 +170,7 @@ basic.showNumber(kitronik_halo_hd.readDateParameter(DateParameter.Seconds))
 Set Alarm Block
 The set alarm block allows the user to input a time for an alarm to trigger on either once or daily.  The alarm can either be silenced by the user or automatically
 ```blocks
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
-kitronik_halo_hd.simpleAlarmSet(kitronik_halo_hd.AlarmType.Single, 12, 45, kitronik_halo_hd.AlarmSilence.autoSilence)
+let Alarm = kitronik_halo_hd.simpleAlarmSet(kitronik_halo_hd.AlarmType.Single, 12, 45, kitronik_halo_hd.AlarmSilence.autoSilence)
 ```
 
 Simple alarm check
