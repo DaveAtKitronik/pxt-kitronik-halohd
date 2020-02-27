@@ -170,7 +170,7 @@ basic.showNumber(kitronik_halo_hd.readDateParameter(DateParameter.Seconds))
 Set Alarm Block
 The set alarm block allows the user to input a time for an alarm to trigger on either once or daily.  The alarm can either be silenced by the user or automatically
 ```blocks
-let Alarm = kitronik_halo_hd.simpleAlarmSet(kitronik_halo_hd.AlarmType.Single, 12, 45, kitronik_halo_hd.AlarmSilence.autoSilence)
+kitronik_halo_hd.simpleAlarmSet(kitronik_halo_hd.AlarmType.Single, 12, 45, kitronik_halo_hd.AlarmSilence.autoSilence)
 ```
 
 Simple alarm check
