@@ -62,12 +62,12 @@ haloDisplay.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 
 colours picker block allows the user to pick from a set of colours.
 ```blocks
-haloDisplay.colors(ZipLedColors.Red)
+let colours = haloDisplay.colors(ZipLedColors.Red)
 ```
 
 RGB block allows the user to set any colour by setting different levels for red, green, and blue between 0 and 255
 ```blocks
-haloDisplay.rgb(255, 255, 255)
+let white = haloDisplay.rgb(255, 255, 255)
 ```
 
 Range block allows the user to select a range of ZIP LED's for a particular operation (such as setting to Red)
@@ -84,7 +84,7 @@ haloDisplay.showBarGraph(kitronik_halo_hd.readSoundLevel(), 255)
 
 Wavelength block simulates a particular wavelength colour by automatically mixing the RGB values.
 ```blocks
-haloDisplay.wavelength(470)
+let Blue = haloDisplay.wavelength(470)
 ```
 
 # Microphone blocks
