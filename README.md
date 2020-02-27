@@ -61,7 +61,8 @@ kitronik_halo_hd.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 
 colours picker block allows the user to pick from a set of colours.
 ```blocks
-kitronik_halo_hd.colors(ZipLedColors.Red)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
+let Colour = kitronik_halo_hd.colors(ZipLedColors.Red)
 ```
 
 RGB block allows the user to set any colour by setting different levels for red, green, and blue between 0 and 255
