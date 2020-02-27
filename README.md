@@ -20,68 +20,73 @@ let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 
 Show colour block will set all the ZIP LED's to the same colour
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.showColor(kitronik_halo_hd.colors(ZipLedColors.Red))
 ```
 
 Show block will output to the ZIP LEDs
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.show()
 ```
 
 Show rainbow block will output a raindow spectrum across all the ZIP LEDs
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.showRainbow(1, 360)
 ```
 
 Clear block will clear any illuminated ZIP LEDs
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.clear()
 ```
 
 Set the brightness of all the ZIP LEDs, from 0 - 255 (255 full brightness) Use a 'show' block to make the changes visible.
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.setBrightness(255)
 ```
 
 rotate the pattern currently on the ZIP LEDs by the number of LEDs. The LEDs at the end of the chain reappear at the begining.
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.rotate(1)
 ```
 
 Set ZIP LED colour sets the RGB colour of a single ZIP LED.
 ```blocks
-let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.setZipLedColor(15, kitronik_halo_hd.rgb(255, 255, 255))
 ```
 
 colours picker block allows the user to pick form a set of colours.
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.colors(ZipLedColors.Red)
 ```
 
 RGB block allows the user to set any colour by setting different levels for red, green, and blue between 0 and 255
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.rgb(255, 255, 255)
 ```
 
 Range block allows the user to select a range of ZIP LED's for a particular operation (such as setting to Red)
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.range(0, 30).showColor(kitronik_halo_hd.colors(ZipLedColors.Red))
 ```
 
 Show Bar Graph will plot an input as a green to red display on the ZIP LED's
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.showBarGraph(kitronik_halo_hd.readSoundLevel(), 255)
 ```
 
 Wavelength block simulates a particular wavelength colour by automatically mixing the RGB values.
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 haloDisplay.wavelength(470)
 ```
 
@@ -89,16 +94,19 @@ haloDisplay.wavelength(470)
 
 Read sound level block will take an anolgue reading of the current sound level and return as a number
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 basic.showNumber(kitronik_halo_hd.readSoundLevel())
 ```
 
 Read sound level block will take five readings of the sound level, calculate the average and return as a number
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 basic.showNumber(kitronik_halo_hd.readAverageSoundLevel())
 ```
 
 Listen for clap will listen for a number of claps within a defined time period (between 1 and 10 seconds), once detected the code will execute
 ```blocks
+let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
 kitronik_halo_hd.listenForClap(1, 1, function () {
     basic.showLeds(`
         . . . . .
